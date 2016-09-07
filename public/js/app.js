@@ -5,8 +5,8 @@ angular.module("InstituteApp", ['ngRoute'])
         templateUrl: "../views/list.html",
         controller: "ListController",
         resolve: {
-          contacts: function(Contacts) {
-            return Contacts.getContacts();
+          ContactsServiceData: function(ContactsService) {
+            return ContactsService.getContacts();
           }
         }
       })
@@ -22,7 +22,7 @@ angular.module("InstituteApp", ['ngRoute'])
         redirectTo: "/"
       })
   })
-  .service("Contacts", function($http) {
+  .service("ContactsService", function($http) {
     this.getContacts = function() {
       return $http.get("/contacts").
       then(function(response) {

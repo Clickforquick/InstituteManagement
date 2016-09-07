@@ -1,6 +1,6 @@
-angular.module('InstituteApp', [])
-  .controller("EditcontactController", function($scope, $routeParams, Contacts) {
-    Contacts.getContact($routeParams.contactId).then(function(doc) {
+angular.module('InstituteApp')
+  .controller("EditContactController", function($scope, $routeParams, ContactsService) {
+    ContactsService.getContact($routeParams.contactId).then(function(doc) {
       $scope.contact = doc.data;
     }, function(response) {
       alert(response);
@@ -17,12 +17,12 @@ angular.module('InstituteApp', [])
     }
 
     $scope.saveContact = function(contact) {
-      Contacts.editContact(contact);
+      ContactsService.editContact(contact);
       $scope.editMode = false;
       $scope.contactFormUrl = "";
     }
 
     $scope.deleteContact = function(contactId) {
-      Contacts.deleteContact(contactId);
+      ContactsService.deleteContact(contactId);
     }
   });
