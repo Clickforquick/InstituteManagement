@@ -1,22 +1,26 @@
 // angular routes 
+angular.module('InstituteApp')
+  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    $routeProvider
+      .when("/", {
+        templateUrl: "../views/list.html",
+        controller: "ListController",
+        resolve: {
+          ContactsServiceData: function(ContactsService) {
+            return ContactsService.getContacts();
+          }
+        }
+      })
+      .when("/new/contact", {
+        controller: "NewContactController",
+        templateUrl: "../views/contact-form.html"
+      })
+      .when("/contact/:contactId", {
+        controller: "EditContactController",
+        templateUrl: "../views/contact.html"
+      })
+      .otherwise({
+        redirectTo: "/"
+      });
 
-// public/js/appRoutes.js
-angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-
-  $routeProvider
-
-  // home page
-    .when('/', {
-    templateUrl: 'index.html',
-    controller: 'MainController'
-  })
-
-  // users page that will use the NerdController
-  .when('/users', {
-    templateUrl: 'views/users.html',
-    controller: 'UserController'
-  });
-
-  $locationProvider.html5Mode(true);
-
-}]);
+  }]);

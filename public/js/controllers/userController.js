@@ -1,4 +1,21 @@
 angular.module('InstituteApp')
+  .controller("ListController", function(ContactsServiceData, $scope) {
+    $scope.contacts = ContactsServiceData.data;
+  })
+  .controller("NewContactController", function($scope, $location, ContactsService) {
+    $scope.back = function() {
+      $location.path("#/");
+    }
+
+    $scope.saveContact = function(contact) {
+      ContactsService.createContact(contact).then(function(doc) {
+        var contactUrl = "/contact/" + doc.data._id;
+        $location.path(contactUrl);
+      }, function(response) {
+        alert(response);
+      });
+    }
+  })
   .controller("EditContactController", function($scope, $routeParams, ContactsService) {
     ContactsService.getContact($routeParams.contactId).then(function(doc) {
       $scope.contact = doc.data;

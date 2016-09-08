@@ -1,23 +1,52 @@
-// public/js/services/NerdService.js
-angular.module('UserService', []).factory('User', ['$http', function($http) {
-
-  return {
-    // call to get all nerds
-    get: function() {
-      return $http.get('/api/User');
-    },
-
-
-    // these will work when more API routes are defined on the Node side of things
-    // call to POST and create a new nerd
-    create: function(userData) {
-      return $http.post('/api/user', userData);
-    },
-
-    // call to DELETE a nerd
-    delete: function(id) {
-      return $http.delete('/api/user/' + id);
+angular.module('InstituteApp')
+  .factory("ContactsService", ['$http', function($http) {
+    var userfac = {};
+    userfac.getContacts = function() {
+      return $http.get("/contacts").
+      then(function(response) {
+        return response;
+      }, function(response) {
+        alert("Error finding contacts.");
+      });
     }
-  }
+    userfac.createContact = function(contact) {
+      return $http.post("/contacts", contact).
+      then(function(response) {
+        return response;
+      }, function(response) {
+        alert("Error creating contact.");
+      });
+    }
+    userfac.getContact = function(contactId) {
+      var url = "/contacts/" + contactId;
+      return $http.get(url).
+      then(function(response) {
+        return response;
+      }, function(response) {
+        alert("Error finding this contact.");
+      });
+    }
+    userfac.editContact = function(contact) {
+      var url = "/contacts/" + contact._id;
+      console.log(contact._id);
+      return $http.put(url, contact).
+      then(function(response) {
+        return response;
+      }, function(response) {
+        alert("Error editing this contact.");
+        console.log(response);
+      });
+    }
+    userfac.deleteContact = function(contactId) {
+      var url = "/contacts/" + contactId;
+      return $http.delete(url).
+      then(function(response) {
+        return response;
+      }, function(response) {
+        alert("Error deleting this contact.");
+        console.log(response);
+      });
+    };
 
-}]);
+    return userfac;
+  }]);
