@@ -13,6 +13,7 @@
   <!-- Angular lib -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-route.min.js"></script>
+  <script src="/libs/angular-ui-router.min.js"></script>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <!-- Create some padding for body -->
@@ -36,13 +37,13 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#/">Home</a></li>
+          <li class="active"><a ui-sref="home">Home</a></li>
         </ul>
       </div>
     </div>
   </nav>
   <!-- Dynamically render templates -->
-  <div class="container" ng-view>
+  <div class="container" ui-view>
   </div>
 </body>
 

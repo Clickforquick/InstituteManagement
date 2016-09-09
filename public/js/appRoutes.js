@@ -1,8 +1,9 @@
 // angular routes 
 angular.module('InstituteApp')
-  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $routeProvider
-      .when("/", {
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('home', {
+        url: "/",
         templateUrl: "../views/list.html",
         controller: "ListController",
         resolve: {
@@ -11,16 +12,19 @@ angular.module('InstituteApp')
           }
         }
       })
-      .when("/new/contact", {
+      .state('newContact', {
+        url: "/new/contact",
         controller: "NewContactController",
         templateUrl: "../views/contact-form.html"
       })
-      .when("/contact/:contactId", {
+      .state('contactById', {
+        url: "/contact/:contactId",
         controller: "EditContactController",
         templateUrl: "../views/contact.html"
       })
-      .otherwise({
-        redirectTo: "/"
-      });
+
+    // catch all route
+    // send users to the home page
+    $urlRouterProvider.otherwise('/');
 
   }]);

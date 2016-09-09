@@ -1,1 +1,1 @@
-angular.module("InstituteApp", ['ngRoute']);
+angular.module("InstituteApp", ['ui.router']);
