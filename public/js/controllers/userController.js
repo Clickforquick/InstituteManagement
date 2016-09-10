@@ -16,8 +16,8 @@ angular.module('InstituteApp')
       });
     }
   })
-  .controller("EditContactController", function($scope, $routeParams, ContactsService) {
-    ContactsService.getContact($routeParams.contactId).then(function(doc) {
+  .controller("EditContactController", function($scope, $stateParams, ContactsService) {
+    ContactsService.getContact($stateParams._id).then(function(doc) {
       $scope.contact = doc.data;
     }, function(response) {
       alert(response);
@@ -39,7 +39,7 @@ angular.module('InstituteApp')
       $scope.contactFormUrl = "";
     }
 
-    $scope.deleteContact = function(contactId) {
-      ContactsService.deleteContact(contactId);
+    $scope.deleteContact = function(_id) {
+      ContactsService.deleteContact(_id);
     }
   });

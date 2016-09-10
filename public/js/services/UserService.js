@@ -17,8 +17,8 @@ angular.module('InstituteApp')
         alert("Error creating contact.");
       });
     }
-    userfac.getContact = function(contactId) {
-      var url = "/contacts/" + contactId;
+    userfac.getContact = function(_id) {
+      var url = "/contacts/" + _id;
       return $http.get(url).
       then(function(response) {
         return response;
@@ -37,8 +37,8 @@ angular.module('InstituteApp')
         console.log(response);
       });
     }
-    userfac.deleteContact = function(contactId) {
-      var url = "/contacts/" + contactId;
+    userfac.deleteContact = function(_id) {
+      var url = "/contacts/" + _id;
       return $http.delete(url).
       then(function(response) {
         return response;

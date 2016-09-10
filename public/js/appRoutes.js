@@ -18,7 +18,7 @@ angular.module('InstituteApp')
         templateUrl: "../views/contact-form.html"
       })
       .state('contactById', {
-        url: "/contact/:contactId",
+        url: "/contact/:_id",
         controller: "EditContactController",
         templateUrl: "../views/contact.html"
       })

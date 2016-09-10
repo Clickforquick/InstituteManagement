@@ -17,7 +17,7 @@
     <tbody>
       <tr ng-repeat="contact in contacts | orderBy:'lastName'" style="cursor:pointer">
         <td>
-          <a ui-sref="contactById({contactId : contact._id})">{{ contact.firstName }} {{ contact.lastName }}</a>
+          <a ui-sref="contactById({_id : contact._id})">{{ contact.firstName }} {{ contact.lastName }}</a>
         </td>
       </tr>
     </tbody>
