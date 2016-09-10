@@ -56,6 +56,7 @@ app.get("/users", function(req, res) {
 });
 
 app.post("/users", function(req, res) {
+  var newUser = req.body;
   newUser.createDate = new Date();
 
   if (!(req.body.firstName || req.body.lastName)) {
