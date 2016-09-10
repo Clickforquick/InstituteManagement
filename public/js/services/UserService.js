@@ -1,49 +1,49 @@
 angular.module('InstituteApp')
-  .factory("ContactsService", ['$http', function($http) {
+  .factory("UsersService", ['$http', function($http) {
     var userfac = {};
-    userfac.getContacts = function() {
-      return $http.get("/contacts").
+    userfac.getUsers = function() {
+      return $http.get("/users").
       then(function(response) {
         return response;
       }, function(response) {
-        alert("Error finding contacts.");
+        alert("Error finding users.");
       });
     }
-    userfac.createContact = function(contact) {
-      return $http.post("/contacts", contact).
+    userfac.createUser = function(user) {
+      return $http.post("/users", user).
       then(function(response) {
         return response;
       }, function(response) {
-        alert("Error creating contact.");
+        alert("Error creating user.");
       });
     }
-    userfac.getContact = function(_id) {
-      var url = "/contacts/" + _id;
+    userfac.getUser = function(_id) {
+      var url = "/users/" + _id;
       return $http.get(url).
       then(function(response) {
         return response;
       }, function(response) {
-        alert("Error finding this contact.");
+        alert("Error finding this user.");
       });
     }
-    userfac.editContact = function(contact) {
-      var url = "/contacts/" + contact._id;
-      console.log(contact._id);
-      return $http.put(url, contact).
+    userfac.editUser = function(user) {
+      var url = "/users/" + user._id;
+      console.log(user._id);
+      return $http.put(url, user).
       then(function(response) {
         return response;
       }, function(response) {
-        alert("Error editing this contact.");
+        alert("Error editing this user.");
         console.log(response);
       });
     }
-    userfac.deleteContact = function(_id) {
-      var url = "/contacts/" + _id;
+    userfac.deleteUser = function(_id) {
+      var url = "/users/" + _id;
       return $http.delete(url).
       then(function(response) {
         return response;
       }, function(response) {
-        alert("Error deleting this contact.");
+        alert("Error deleting this user.");
         console.log(response);
       });
     };

@@ -1,45 +1,45 @@
 angular.module('InstituteApp')
-  .controller("ListController", function(ContactsServiceData, $scope) {
-    $scope.contacts = ContactsServiceData.data;
+  .controller("UserListController", function(UsersServiceData, $scope) {
+    $scope.users = UsersServiceData.data;
   })
-  .controller("NewContactController", function($scope, $location, ContactsService) {
+  .controller("NewUserController", function($scope, $location, UsersService) {
     $scope.back = function() {
       $location.path("#/");
     }
 
-    $scope.saveContact = function(contact) {
-      ContactsService.createContact(contact).then(function(doc) {
-        var contactUrl = "/contact/" + doc.data._id;
-        $location.path(contactUrl);
+    $scope.saveUser = function(user) {
+      UsersService.createUser(user).then(function(doc) {
+        var userUrl = "/user/" + doc.data._id;
+        $location.path(userUrl);
       }, function(response) {
         alert(response);
       });
     }
   })
-  .controller("EditContactController", function($scope, $stateParams, ContactsService) {
-    ContactsService.getContact($stateParams._id).then(function(doc) {
-      $scope.contact = doc.data;
+  .controller("EditUserController", function($scope, $stateParams, UsersService) {
+    UsersService.getUser($stateParams._id).then(function(doc) {
+      $scope.user = doc.data;
     }, function(response) {
       alert(response);
     });
 
     $scope.toggleEdit = function() {
       $scope.editMode = true;
-      $scope.contactFormUrl = "../views/contact-form.html";
+      $scope.userFormUrl = "../views/user-form.html";
     }
 
     $scope.back = function() {
       $scope.editMode = false;
-      $scope.contactFormUrl = "";
+      $scope.userFormUrl = "";
     }
 
-    $scope.saveContact = function(contact) {
-      ContactsService.editContact(contact);
+    $scope.saveUser = function(user) {
+      UsersService.editUser(user);
       $scope.editMode = false;
-      $scope.contactFormUrl = "";
+      $scope.userFormUrl = "";
     }
 
-    $scope.deleteContact = function(_id) {
-      ContactsService.deleteContact(_id);
+    $scope.deleteUser = function(_id) {
+      UsersService.deleteUser(_id);
     }
   });

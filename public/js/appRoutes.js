@@ -4,23 +4,23 @@ angular.module('InstituteApp')
     $stateProvider
       .state('home', {
         url: "/",
-        templateUrl: "../views/list.html",
-        controller: "ListController",
+        templateUrl: "../views/UsersList.html",
+        controller: "UserListController",
         resolve: {
-          ContactsServiceData: function(ContactsService) {
-            return ContactsService.getContacts();
+          UsersServiceData: function(UsersService) {
+            return UsersService.getUsers();
           }
         }
       })
-      .state('newContact', {
-        url: "/new/contact",
-        controller: "NewContactController",
-        templateUrl: "../views/contact-form.html"
+      .state('newUser', {
+        url: "/new/user",
+        controller: "NewUserController",
+        templateUrl: "../views/user-form.html"
       })
-      .state('contactById', {
-        url: "/contact/:_id",
-        controller: "EditContactController",
-        templateUrl: "../views/contact.html"
+      .state('userById', {
+        url: "/user/:_id",
+        controller: "EditUserController",
+        templateUrl: "../views/user.html"
       })
 
     // catch all route
