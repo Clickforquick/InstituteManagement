@@ -13,10 +13,10 @@
 <div ng-hide="editMode" class="container">
   <div>
     <p ng-if="user.email">email: <a ui-sref="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a></p>
-    <p ng-if="user.phone.mobile">phone (m): {{ user.phone.mobile }} </p>
-    <p ng-if="user.phone.work">phone (w): {{ user.phone.work }} </p>
-    <p ng-if="user.address"> address: {{ user.address }} </p>
-    <p ng-if="user.twitter"> twitter: <a ui-sref="https://twitter.com/{{ user.twitter }}" target="_blank">@{{ user.twitter }}</a></p>
+    <p ng-if="user.mobile"> MobileNo: {{ user.mobile }} </p>
+    <p ng-if="user.address">Address : {{ user.address }} </p>
+    <p ng-if="user.role"> UserRole: {{ user.role }} </p>
+    <p ng-if="user.password"> Password: {{ user.password }} </p>
     <p>
       <button style="margin-top:20px" class="btn btn-default" ng-click="toggleEdit()">Edit</button>
       <a style="margin-top:20px" class="btn btn-default" ui-sref="home">Back</a>

@@ -1,33 +1,76 @@
-// grab the user model we just created
-var users = require('./models/users');
+var express = require('express');
+var router = express.Router();
 
-module.exports = function(app) {
+/*  "/users"
+ *    GET: finds all users
+ *    POST: creates a new user
+ */
 
-  // server routes ===========================================================
-  // handle things like api calls
-  // authentication routes
-
-  // sample api route
-  app.get('/users', function(req, res) {
-    // use mongoose to get all users in the database
-    users.find(function(err, users) {
-
-      // if there is an error retrieving, send the error. 
-      // nothing after res.send(err) will execute
-      if (err)
-        res.send(err);
-
-      res.json(users); // return all users in JSON format
-    });
+router.get("/users", function(req, res) {
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get users.");
+    } else {
+      res.status(200).json(docs);
+    }
   });
+});
 
-  // route to handle creating goes here (app.post)
-  // route to handle delete goes here (app.delete)
+router.post("/users", function(req, res) {
+  var newUser = req.body;
+  newUser.createDate = new Date();
 
-  // frontend routes =========================================================
-  // route to handle all angular requests
-  app.get('*', function(req, res) {
-    res.sendfile('./public/index.html'); // load our public/index.html file
+  if (!(req.body.firstName || req.body.lastName)) {
+    handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
+  }
+
+  db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
   });
+});
 
-};
+/*  "/users/:id"
+ *    GET: find user by id
+ *    PUT: update user by id
+ *    DELETE: deletes user by id
+ */
+
+router.get("/users/:id", function(req, res) {
+  db.collection(USERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get user");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+router.put("/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(USERS_COLLECTION).updateOne({ _id: new ObjectID(req.params.id) }, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update user");
+    } else {
+      res.status(204).end();
+    }
+  });
+});
+
+router.delete("/users/:id", function(req, res) {
+  db.collection(USERS_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete user");
+    } else {
+      res.status(204).end();
+    }
+  });
+});
+
+
+module.exports = router;

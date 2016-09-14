@@ -2,8 +2,11 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
-var ObjectID = mongodb.ObjectID;
+var db = require('./config/db.js');
 
+var users = require('./app/models/users.js');
+
+var ObjectID = mongodb.ObjectID;
 var USERS_COLLECTION = "users";
 
 var app = express();
@@ -11,10 +14,10 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-var db;
+//var db;
 
 // Connect to the database before starting the application server. 
-var url = 'mongodb://localhost:27017/test'
+/*var url = 'mongodb://localhost:27017/test'
 mongodb.MongoClient.connect(url, function(err, database) {
   if (err) {
     console.log(err);
@@ -24,6 +27,14 @@ mongodb.MongoClient.connect(url, function(err, database) {
   // Save database object from the callback for reuse.
   db = database;
   console.log("Database connection ready");
+*/
+var   mongoURL = 'mongodb://localhost:27017/test';
+ db.connect(mongoURL, {}, function(err, success) {
+     if (err) {
+       console.log('\n DB connect :: Fail');
+       console.log(dbError);
+       return dbError;
+     }
 
   // Initialize the app.
   var server = app.listen(process.env.PORT || 8080, function() {
@@ -46,7 +57,7 @@ function handleError(res, reason, message, code) {
  */
 
 app.get("/users", function(req, res) {
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+  return users.find(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get users.");
     } else {
@@ -56,20 +67,29 @@ app.get("/users", function(req, res) {
 });
 
 app.post("/users", function(req, res) {
-  var newUser = req.body;
-  newUser.createDate = new Date();
+  var newUser = new users( 
+               {firstName : req.body.firstName,
+                lastName  : req.body.lastName,
+                address   : req.body.address,
+                mobile    : req.body.mobile,
+                email     : req.body.email,
+                password  : req.body.password,
+                role      : req.body.role                
+               });
+  //newUser.createDate = new Date();
 
   if (!(req.body.firstName || req.body.lastName)) {
     handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
   }
 
-  db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+  newUser.save(function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new user.");
     } else {
-      res.status(201).json(doc.ops[0]);
+      return console.log("created");
     }
   });
+  return res.send(newUser);
 });
 
 /*  "/users/:id"
@@ -79,7 +99,7 @@ app.post("/users", function(req, res) {
  */
 
 app.get("/users/:id", function(req, res) {
-  db.collection(USERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  users.findById({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get user");
     } else {
@@ -89,24 +109,36 @@ app.get("/users/:id", function(req, res) {
 });
 
 app.put("/users/:id", function(req, res) {
-  var updateDoc = req.body;
-  delete updateDoc._id;
+ return users.findById(req.params.id, function (err, user) {
+          user.firstName = req.body.firstName;
+          user.lastName  = req.body.lastName;
+          user.address        = req.body.address;
+          user.mobile         = req.body.mobile;
+          user.email          = req.body.email;
+          user.password       = req.body.password;
+          user.role           = req.body.role;         
 
-  db.collection(USERS_COLLECTION).updateOne({ _id: new ObjectID(req.params.id) }, updateDoc, function(err, doc) {
+ // delete updateDoc._id;
+  return user.save(function(err) {
     if (err) {
       handleError(res, err.message, "Failed to update user");
     } else {
       res.status(204).end();
     }
+   // return res.send(user);
   });
+})
 });
 
+
 app.delete("/users/:id", function(req, res) {
-  db.collection(USERS_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function(err, result) {
+  return users.findById(req.params.id, function (err, user) {
+  user.remove(function(err) {
     if (err) {
       handleError(res, err.message, "Failed to delete user");
     } else {
       res.status(204).end();
     }
   });
+})
 });
