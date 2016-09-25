@@ -1,9 +1,9 @@
 module.exports = {
   'defaultPort': 8000,
-  'database': 'mongodb://localhost:27017/tallgrass',
+  'mongoUrl': 'mongodb://localhost:27017/tallgrass',
   'dbuserid': '',
   'dbpassword': '',
-  'secretkey': 'iloveclickforquick',
+  'secretKey': '12345-67890-09876-54321',
   'smtpserver': 'smtp01.packad.com',
   'smtpuserid': 'pm@packad.com',
   'smtppassword': 'P@ckpr0v2x',
@@ -12,3 +12,4 @@ module.exports = {
   'cryptopassword': 'd6F3Efeq',
   'appBaseUrl': 'http://localhost:8000'
 };
+   

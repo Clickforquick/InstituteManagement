@@ -1,6 +1,14 @@
 angular.module('InstituteApp')
   .factory("UsersService", ['$http', function($http) {
     var userfac = {};
+    userfac.loginUser = function(user) {
+      return $http.post("/users/login", user).
+      then(function(response) {
+        return response;
+      }, function(response) {
+        alert("Error logingin user.");
+      });
+    }
     userfac.getUsers = function() {
       return $http.get("/users").
       then(function(response) {
@@ -10,7 +18,7 @@ angular.module('InstituteApp')
       });
     }
     userfac.createUser = function(user) {
-      return $http.post("/users", user).
+      return $http.post("/users/register", user).
       then(function(response) {
         return response;
       }, function(response) {

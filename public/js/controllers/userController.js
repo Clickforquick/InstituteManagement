@@ -1,5 +1,16 @@
 angular.module('InstituteApp')
-  .controller("UserListController", function(UsersServiceData, $scope) {
+ .controller("LoginController", function($scope,$location,$state,$stateParams,$cookies,UsersService) {
+     $scope.loginUser = function(user) {
+      UsersService.loginUser(user).then(function(doc) {
+        $cookies.put('token',doc.data.token);
+        $cookies.put('role',doc.data.role);
+        if ($cookies.get('role')=="cat") {$state.go("newUser");}       
+      }, function(response) {
+        alert(response);
+      });
+    } 
+  })
+   .controller("UserListController", function(UsersServiceData, $scope) {
     $scope.users = UsersServiceData.data;
   })
   .controller("NewUserController", function($scope, $location, UsersService) {
@@ -9,8 +20,7 @@ angular.module('InstituteApp')
 
     $scope.saveUser = function(user) {
       UsersService.createUser(user).then(function(doc) {
-        var userUrl = "/user/" + doc.data._id;
-        $location.path(userUrl);
+        $scope.rs = doc;       
       }, function(response) {
         alert(response);
       });

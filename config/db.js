@@ -8,7 +8,7 @@
  */
 var   mongoose = require('mongoose');
 var   dbError = 'Looks like there is error conneting to DB';
-
+var url = "mongodb://localhost:27017/tallgrass";
 
 /**
  * We export methods that return class object (Schema constructor function)
@@ -18,14 +18,17 @@ var   dbError = 'Looks like there is error conneting to DB';
 module.exports = {
   connect: function(url, options, callBack) {
     console.log('\n db.connect :: method entry');
-    mongoose.connect(url, options, function(err, success) {
+    mongoose.connect(url, options, function(err, db) {
       if (err) {
         console.log('\n db.connect :: db connection error');
         console.log(dbError);
         return dbError;
       }
 		console.log('connected to db : ' + url);
-      	callBack();
+      	return db.once('open', function() {
+        // we're connected!
+        console.log("Connected correctly to server");
+        });
     });
   },
    disconnect: function() {

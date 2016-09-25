@@ -1,1 +1,1 @@
-angular.module("InstituteApp", ['ui.router']);
+angular.module("InstituteApp", ['ui.router','ngCookies']);

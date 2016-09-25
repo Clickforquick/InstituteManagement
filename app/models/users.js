@@ -1,16 +1,19 @@
 // the users model to handle CRUD operations , like adding users, updating user ,deleting user
 
 var mongoose = require('mongoose');
-module.exports = mongoose.model('users', {
-  firstName	: { type: String, required: true },
-  lastName	: { type: String, required: true },
-  address   : { type: String  },
-  mobile	  : { type: String  },
-  email 	  : { type: String  },
-  password	: { type: String  },
-  role		  : { type: String  },
-  createdBy	: { type: String, default: 'logInUser' },
-  modifiedBy: { type: String, default: 'logInUser' },
-  createdAt : { type: Date, default: Date.now },
-  modifiedAt: { type: Date, default: Date.now }
+var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
+var User = new Schema({
+  firstname: { type: String  },
+  lastName: { type: String  },
+  username: { type: String  },
+  createdBy: { type: String  },
+  modifiedBy: { type: String  },
+  password: { type: String  },
+  role : {type : String }
+},{
+  timestamps: true
 });
+
+User.plugin(passportLocalMongoose);
+module.exports = mongoose.model('User', User);
