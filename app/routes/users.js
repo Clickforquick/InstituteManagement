@@ -4,6 +4,8 @@ var passport = require('passport');
 var User = require('../models/users');
 var Verify = require('./verify');
 /* GET users listing. */
+
+
 router.route('/').get(Verify.verifyAdmin, function(req, res, next) {
   //res.send('respond with a resource');
   User.find({}, function(err, uu) {
@@ -12,6 +14,17 @@ router.route('/').get(Verify.verifyAdmin, function(req, res, next) {
   });
 
 });
+
+router.get('/coo', function(req,res){
+    console.log(req.secure);
+  // check if client sent cookie
+  var cookie = req.cookies.cookieName;
+  //console.log(cookie);
+  //res.cookie('cookieName', token, { maxAge: 900000, httpOnly: true });
+  res.end();
+
+});
+
 router.post('/register', function(req, res) {
   User.register(new User({ firstname: req.body.firstname, lastName: req.body.lastName , username : req.body.username 
     , createdBy : req.body.createdBy , modifiedBy:req.body.modifiedBy , role : req.body.role }), req.body.password ,
@@ -25,6 +38,7 @@ router.post('/register', function(req, res) {
     });
 });
 router.post('/login', function(req, res, next) {
+  console.log(req.secure);
   passport.authenticate('local', function(err, user, info) {
     if (err) {
       return next(err);
@@ -42,9 +56,12 @@ router.post('/login', function(req, res, next) {
       }
 
       var token = Verify.getToken(user);
+      //console.log(token);  , secure:true 
+      res.cookie('cookieName', token, { maxAge: 900000, httpOnly: true});
       res.status(200).json({
         status: 'Login successful!',
         role: user.role,
+        name : user.username,
         success: true,
         token: token
       });

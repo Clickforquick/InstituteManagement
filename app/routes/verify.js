@@ -42,7 +42,8 @@ exports.verifyAdmin = function(req, res, next) {
         err.status = 401;
         return next(err);
       } else {
-        if (decoded._doc.designation=="admin") {
+        console.log(decoded._doc);
+        if (decoded._doc.role=="admin") {
           return next();
         } else {
           var err = new Error("You are not authorised to perform this operation");

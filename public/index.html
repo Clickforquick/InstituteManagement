@@ -1,50 +1,17 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="InstituteApp">
-
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>InstMgmt</title>
+  <base href="/">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="/libs/jquery/dist/jquery.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- Angular lib -->
-  <script src="/libs/angular/angular.min.js"></script>
-  <script src="/libs/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="/libs/angular-cookies/angular-cookies.min.js"></script>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Create some padding for body -->
-  <style>
-  body {
-    min-height: 2000px;
-    padding-top: 70px;
-  }
-  </style>
-  <script src="/js/app.js"></script>
-  <script src="/js/controllers/userController.js"></script>
-  <script src="/js/appRoutes.js"></script>
-  <script src="/js/services/userService.js"></script>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!--<link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />-->
+
 </head>
-
 <body>
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <div class="navbar-brand" href="#/">TallGrass Soft Institute Management System</div>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a ui-sref="home">Home</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Dynamically render templates -->
-  <div class="container" ui-view = "content" >
-  </div>
-</body>
-
+  <app-root></app-root>
+<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
 </html>
